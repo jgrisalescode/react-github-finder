@@ -3,10 +3,10 @@ import { useEffect, useContext } from "react"
 import { useParams, Link } from "react-router-dom"
 import Spinner from "../components/layout/Spinner"
 import GithubContext from "../context/github/GithubContext"
-import colorNames from "daisyui/colors/colorNames"
+import ReposList from "../components/repos/ReposList"
 
 const User = () => {
-  const { user, getUser, loading } = useContext(GithubContext)
+  const { user, getUser, loading, getUserRepos, repos } = useContext(GithubContext)
 
   // All the data we need is in user
   const {
@@ -30,6 +30,7 @@ const User = () => {
 
   useEffect(() => {
     getUser(params.login)
+    getUserRepos(params.login)
   }, [])
 
   if (loading) {
@@ -131,6 +132,7 @@ const User = () => {
             <div className="stat-value pr-5 text-3xl md:text-4xl">{public_gists}</div>
           </div>
         </div>
+        <ReposList repos={repos} />
       </div>
     </>
   )
